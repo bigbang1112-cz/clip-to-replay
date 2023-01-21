@@ -34,7 +34,7 @@ public class ClipToReplay : Tool, IHasOutput<BinFile>
         using var w = new GameBoxWriter(ms);
 
         w.Write(headerPart1);
-        w.Write(uncompressed ? 85 : 67);
+        w.Write(uncompressed ? (byte)85 : (byte)67);
         w.Write(headerPart2);
 
         if (uncompressed)
