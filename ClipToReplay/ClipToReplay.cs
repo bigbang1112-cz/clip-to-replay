@@ -4,28 +4,27 @@ using GbxToolAPI;
 
 namespace ClipToReplay;
 
-public class ClipToReplay : Tool, IHasOutput<BinFile>
+public class ClipToReplay : Tool<ClipToReplayConfig>, IHasOutput<BinFile>
 {
     private readonly CGameCtnChallenge? map;
     private readonly byte[]? mapData;
     private readonly CGameCtnMediaClip clip;
-    private readonly bool uncompressed;
     
     private static readonly byte[] headerPart1 = new byte[] { 71, 66, 88, 6, 0, 66, 85 };
     private static readonly byte[] headerPart2 = new byte[] { 82, 0, 224, 7, 36, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    public ClipToReplay(CGameCtnChallenge map, CGameCtnMediaClip clip, bool uncompressed)
+    public override ClipToReplayConfig Config { get; set; } = new();
+
+    public ClipToReplay(CGameCtnChallenge map, CGameCtnMediaClip clip)
     {
         this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.clip = clip ?? throw new ArgumentNullException(nameof(clip));
-        this.uncompressed = uncompressed;
     }
     
-    public ClipToReplay(byte[] mapData, CGameCtnMediaClip clip, bool uncompressed)
+    public ClipToReplay(byte[] mapData, CGameCtnMediaClip clip)
     {
         this.mapData = mapData ?? throw new ArgumentNullException(nameof(mapData));
         this.clip = clip ?? throw new ArgumentNullException(nameof(clip));
-        this.uncompressed = uncompressed;
     }
 
     public BinFile Produce()
@@ -34,10 +33,10 @@ public class ClipToReplay : Tool, IHasOutput<BinFile>
         using var w = new GameBoxWriter(ms);
 
         w.Write(headerPart1);
-        w.Write(uncompressed ? (byte)85 : (byte)67);
+        w.Write(Config.Uncompressed ? (byte)85 : (byte)67);
         w.Write(headerPart2);
 
-        if (uncompressed)
+        if (Config.Uncompressed)
         {
             WriteMapAndClip(w);
         }
