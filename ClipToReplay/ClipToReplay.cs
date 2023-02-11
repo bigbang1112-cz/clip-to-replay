@@ -4,7 +4,7 @@ using GbxToolAPI;
 
 namespace ClipToReplay;
 
-public class ClipToReplay : Tool<ClipToReplayConfig>, IHasOutput<BinFile>
+public class ClipToReplay : Tool, IHasOutput<BinFile>, IConfigurable<ClipToReplayConfig>
 {
     private readonly CGameCtnChallenge? map;
     private readonly byte[]? mapData;
@@ -13,7 +13,7 @@ public class ClipToReplay : Tool<ClipToReplayConfig>, IHasOutput<BinFile>
     private static readonly byte[] headerPart1 = new byte[] { 71, 66, 88, 6, 0, 66, 85 };
     private static readonly byte[] headerPart2 = new byte[] { 82, 0, 224, 7, 36, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    public override ClipToReplayConfig Config { get; set; } = new();
+    public ClipToReplayConfig Config { get; set; } = new();
 
     public ClipToReplay(CGameCtnChallenge map, CGameCtnMediaClip clip)
     {
