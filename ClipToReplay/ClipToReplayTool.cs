@@ -4,7 +4,7 @@ using GbxToolAPI;
 
 namespace ClipToReplay;
 
-public class ClipToReplayTool : Tool, IHasOutput<BinFile>, IConfigurable<ClipToReplayConfig>
+public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipToReplayConfig>
 {
     private readonly CGameCtnChallenge? map;
     private readonly byte[]? mapData;
