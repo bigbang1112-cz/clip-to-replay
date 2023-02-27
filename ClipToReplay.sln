@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipToReplay", "ClipToReplay\ClipToReplay.csproj", "{E22DE9B9-6056-4E79-AFDA-01217EDEBA07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipToReplay", "ClipToReplay\ClipToReplay.csproj", "{E22DE9B9-6056-4E79-AFDA-01217EDEBA07}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GbxToolAPI", "GbxToolAPI\GbxToolAPI\GbxToolAPI.csproj", "{0CB5CE76-52B2-47E2-B3DE-3665DFC78F97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipToReplay.Tests", "ClipToReplay.Tests\ClipToReplay.Tests.csproj", "{D400EA88-722A-4474-9411-C58D395DA56C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0CB5CE76-52B2-47E2-B3DE-3665DFC78F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CB5CE76-52B2-47E2-B3DE-3665DFC78F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CB5CE76-52B2-47E2-B3DE-3665DFC78F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D400EA88-722A-4474-9411-C58D395DA56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D400EA88-722A-4474-9411-C58D395DA56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D400EA88-722A-4474-9411-C58D395DA56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D400EA88-722A-4474-9411-C58D395DA56C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

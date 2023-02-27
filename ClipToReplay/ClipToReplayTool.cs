@@ -4,28 +4,34 @@ using GbxToolAPI;
 
 namespace ClipToReplay;
 
-public class ClipToReplay : Tool, IHasOutput<BinFile>
+public class ClipToReplayTool : Tool, IHasOutput<BinFile>
 {
     private readonly CGameCtnChallenge? map;
     private readonly byte[]? mapData;
     private readonly CGameCtnMediaClip clip;
-    private readonly bool uncompressed;
     
     private static readonly byte[] headerPart1 = new byte[] { 71, 66, 88, 6, 0, 66, 85 };
-    private static readonly byte[] headerPart2 = new byte[] { 82, 0, 224, 7, 36, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly byte[] headerPart2 = new byte[] { 82, 0, 224, 7, 36 };
+    private static readonly byte[] headerPart3 = new byte[] { 69, 0, 0, 0, 0, 0, 0, 0 };
 
-    public ClipToReplay(CGameCtnChallenge map, CGameCtnMediaClip clip, bool uncompressed)
+    private static readonly byte[] ghostPlug = {
+        20, 48, 9, 3, 9, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 32, 9, 3, 24, 32, 9, 3, 3, 0, 0, 0, 0, 0, 0, 64, 10, 0, 0, 0, 83, 116,
+        97, 100, 105, 117, 109, 67, 97, 114, 0, 0, 0, 64, 8, 0, 0, 0, 86, 101, 104, 105, 99, 108, 101, 115, 255, 255, 255, 255, 1, 222,
+        202, 250, 2, 0, 0, 0, 0, 32, 9, 3, 24, 32, 9, 3, 1, 0, 0, 64, 2, 0, 0, 64, 255, 255, 255, 255, 1, 222, 202, 250, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+
+    public bool Uncompressed { get; set; }
+    
+    public ClipToReplayTool(CGameCtnChallenge map, CGameCtnMediaClip clip)
     {
         this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.clip = clip ?? throw new ArgumentNullException(nameof(clip));
-        this.uncompressed = uncompressed;
     }
     
-    public ClipToReplay(byte[] mapData, CGameCtnMediaClip clip, bool uncompressed)
+    public ClipToReplayTool(byte[] mapData, CGameCtnMediaClip clip)
     {
         this.mapData = mapData ?? throw new ArgumentNullException(nameof(mapData));
         this.clip = clip ?? throw new ArgumentNullException(nameof(clip));
-        this.uncompressed = uncompressed;
     }
 
     public BinFile Produce()
@@ -34,10 +40,12 @@ public class ClipToReplay : Tool, IHasOutput<BinFile>
         using var w = new GameBoxWriter(ms);
 
         w.Write(headerPart1);
-        w.Write(uncompressed ? (byte)85 : (byte)67);
+        w.Write(Uncompressed ? (byte)85 : (byte)67);
         w.Write(headerPart2);
+        w.Write(0);
+        w.Write(headerPart3);
 
-        if (uncompressed)
+        if (Uncompressed)
         {
             WriteMapAndClip(w);
         }
@@ -65,11 +73,19 @@ public class ClipToReplay : Tool, IHasOutput<BinFile>
 
             md = ms.ToArray();
         }
-        
+
+        for (var i = 0; i < 2; i++)
+        {
+            w.State.AuxNodes.Add(i, null);
+            w.State.IdStrings.Add("StadiumCar");
+            w.State.IdStrings.Add("Vehicles");
+        }
+
         w.Write(0x03093002);
         w.Write(md.Length);
         w.Write(md);
-        w.Write(0x03093015); // could maybe use 0x0309300C
+        w.Write(ghostPlug);
+        w.Write(0x03093015);
         w.Write(clip);
         w.Write(0xFACADE01);
     }
