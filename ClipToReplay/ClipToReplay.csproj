@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GbxToolAPI\GbxToolAPI\GbxToolAPI.csproj" />
+    <ProjectReference Include="..\GbxToolAPI\Src\GbxToolAPI\GbxToolAPI.csproj" />
   </ItemGroup>
 
 </Project>
