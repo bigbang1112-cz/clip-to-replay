@@ -78,6 +78,9 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
             md = ms.ToArray();
         }
 
+        w.Write(0x03093002);
+        w.WriteByteArray(md);
+
         if (Config.IsTMUF)
         {
             for (var i = 0; i < 2; i++)
@@ -92,7 +95,7 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
 
             w.Write(ghostPlug);
         }
-        
+
         w.Write(0x03093015);
         w.Write(clip);
         w.Write(0xFACADE01);
