@@ -1,6 +1,7 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
 using GbxToolAPI;
+using System.Text;
 
 namespace ClipToReplay;
 
@@ -11,11 +12,11 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
     private readonly CGameCtnMediaClip clip;
     
     private static readonly byte[] headerPart1 = new byte[] { 71, 66, 88, 6, 0, 66, 85 };
-    private static readonly byte[] headerPart2 = new byte[] { 82, 0, 224, 7, 36 };
+    private static readonly byte[] headerPart2 = new byte[] { 82, 0, 48, 9, 3 };
     private static readonly byte[] headerPart3 = new byte[] { 69, 0, 0, 0, 0, 0, 0, 0 };
 
     public ClipToReplayConfig Config { get; set; } = new();
-    
+
     private static readonly byte[] ghostPlug = {
         20, 48, 9, 3, 9, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 32, 9, 3, 24, 32, 9, 3, 3, 0, 0, 0, 0, 0, 0, 64, 10, 0, 0, 0, 83, 116,
         97, 100, 105, 117, 109, 67, 97, 114, 0, 0, 0, 64, 8, 0, 0, 0, 86, 101, 104, 105, 99, 108, 101, 115, 255, 255, 255, 255, 1, 222,
@@ -42,7 +43,7 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
         w.Write(headerPart1);
         w.Write(Config.Uncompressed ? (byte)85 : (byte)67);
         w.Write(headerPart2);
-        w.Write(0);
+        w.Write(0);        
         w.Write(headerPart3);
 
         if (Config.Uncompressed)
@@ -69,22 +70,29 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
             }
 
             using var ms = new MemoryStream();
+
+            // Should have map thumbnail stripping
+
             map.Save(ms);
 
             md = ms.ToArray();
         }
 
-        for (var i = 0; i < 2; i++)
+        if (Config.IsTMUF)
         {
-            w.State.AuxNodes.Add(i, null);
+            for (var i = 0; i < 2; i++)
+            {
+                w.State.AuxNodes.Add(i, null);
+            }
+
+            (typeof(GbxState).GetProperty(nameof(GbxState.IdVersion)) ?? throw new Exception("Cannot set IdVersion")).SetValue(w.State, 3);
+
             w.State.IdStrings.Add("StadiumCar");
             w.State.IdStrings.Add("Vehicles");
-        }
 
-        w.Write(0x03093002);
-        w.Write(md.Length);
-        w.Write(md);
-        w.Write(ghostPlug);
+            w.Write(ghostPlug);
+        }
+        
         w.Write(0x03093015);
         w.Write(clip);
         w.Write(0xFACADE01);
