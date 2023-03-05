@@ -61,20 +61,31 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
     private void WriteMapAndClip(GameBoxWriter w)
     {
         var md = mapData;
-
-        if (md is null)
+        var m = map;
+        
+        if (m is null)
         {
-            if (map is null)
+            if (md is null)
             {
-                throw new Exception("Map data or map object missing");
+                throw new Exception("No map data or map provided");
+            }
+
+            if (Config.OptimizeMap)
+            {
+                using var ms = new MemoryStream(md);
+                m = GameBox.ParseNode<CGameCtnChallenge>(ms);
+            }
+        }
+
+        if (m is not null)
+        {
+            if (Config.OptimizeMap)
+            {
+                m.HeaderChunks.Remove<CGameCtnChallenge.Chunk03043007>();
             }
 
             using var ms = new MemoryStream();
-
-            // Should have map thumbnail stripping
-
-            map.Save(ms);
-
+            m.Save(ms);
             md = ms.ToArray();
         }
 
