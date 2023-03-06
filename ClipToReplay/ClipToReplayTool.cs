@@ -1,10 +1,12 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
 using GbxToolAPI;
-using System.Text;
 
 namespace ClipToReplay;
 
+[ToolName("Clip to Replay")]
+[ToolDescription("Joins map and clip together into a replay file.")]
+[ToolGitHub("bigbang1112-cz/clip-to-replay")]
 public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipToReplayConfig>
 {
     private readonly CGameCtnChallenge? map;
