@@ -1,6 +1,7 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
 using GbxToolAPI;
+using TmEssentials;
 
 namespace ClipToReplay;
 
@@ -48,19 +49,21 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
         w.Write(0);        
         w.Write(headerPart3);
 
+        string fileName;
+
         if (Config.Uncompressed)
         {
-            WriteMapAndClip(w);
+            fileName = WriteMapAndClip(w);
         }
         else
         {
-            WriteCompressedMapAndClip(w);
+            fileName = WriteCompressedMapAndClip(w);
         }
 
-        return new BinFile(ms.ToArray());
+        return new BinFile(ms.ToArray(), fileName + ".Replay.Gbx");
     }
 
-    private void WriteMapAndClip(GameBoxWriter w)
+    private string WriteMapAndClip(GameBoxWriter w)
     {
         var md = mapData;
         var m = map;
@@ -79,8 +82,12 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
             }
         }
 
+        var fileName = Guid.NewGuid().ToString();
+
         if (m is not null)
         {
+            fileName = TextFormatter.Deformat(m.MapName) + "+Clip";
+
             if (Config.OptimizeMap)
             {
                 m.HeaderChunks.Remove<CGameCtnChallenge.Chunk03043007>();
@@ -112,19 +119,23 @@ public class ClipToReplayTool : ITool, IHasOutput<BinFile>, IConfigurable<ClipTo
         w.Write(0x03093015);
         w.Write(clip);
         w.Write(0xFACADE01);
+
+        return fileName;
     }
 
-    private void WriteCompressedMapAndClip(GameBoxWriter w)
+    private string WriteCompressedMapAndClip(GameBoxWriter w)
     {
         using var toCompressMs = new MemoryStream();
         using var toCompressW = new GameBoxWriter(toCompressMs);
 
-        WriteMapAndClip(toCompressW);
+        var fileName = WriteMapAndClip(toCompressW);
 
         var compressed = Lzo.Compress(toCompressMs.ToArray());
 
         w.Write((uint)toCompressMs.Length);
         w.Write((uint)compressed.Length);
         w.Write(compressed);
+
+        return fileName;
     }
 }
