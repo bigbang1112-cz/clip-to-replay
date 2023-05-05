@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipToReplay.Tests", "ClipT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GbxToolAPI", "GbxToolAPI\Src\GbxToolAPI\GbxToolAPI.csproj", "{29B6786F-1526-4D8F-A727-A96D975B3E0E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GbxToolAPI.CLI", "GbxToolAPI\Src\GbxToolAPI.CLI\GbxToolAPI.CLI.csproj", "{86139BE8-BC0D-46BE-8FBC-906EFA38C731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipToReplayCLI", "ClipToReplayCLI\ClipToReplayCLI.csproj", "{20668795-74A8-404A-BC97-EEAE0C58BE06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{29B6786F-1526-4D8F-A727-A96D975B3E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B6786F-1526-4D8F-A727-A96D975B3E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29B6786F-1526-4D8F-A727-A96D975B3E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86139BE8-BC0D-46BE-8FBC-906EFA38C731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86139BE8-BC0D-46BE-8FBC-906EFA38C731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86139BE8-BC0D-46BE-8FBC-906EFA38C731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86139BE8-BC0D-46BE-8FBC-906EFA38C731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20668795-74A8-404A-BC97-EEAE0C58BE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20668795-74A8-404A-BC97-EEAE0C58BE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20668795-74A8-404A-BC97-EEAE0C58BE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20668795-74A8-404A-BC97-EEAE0C58BE06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
