@@ -1,14 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\GbxToolAPI\Src\GbxToolAPI\GbxToolAPI.csproj" />
+	  <PackageReference Include="GbxToolAPI" Version="1.0.3" />
 	</ItemGroup>
 
 </Project>
