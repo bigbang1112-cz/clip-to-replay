@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -16,8 +16,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="GbxToolAPI.CLI" Version="1.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\ClipToReplay\ClipToReplay.csproj" />
-		<ProjectReference Include="..\GbxToolAPI\Src\GbxToolAPI.CLI\GbxToolAPI.CLI.csproj" />
 	</ItemGroup>
 
 </Project>
