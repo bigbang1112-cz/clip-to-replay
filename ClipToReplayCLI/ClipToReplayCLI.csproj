@@ -16,7 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="GbxToolAPI.CLI" Version="1.0.2" />
+	  <PackageReference Include="GbxToolAPI.CLI" Version="1.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
