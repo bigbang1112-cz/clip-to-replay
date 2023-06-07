@@ -5,10 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Version>1.0.1</Version>
+		<IsTrimmable>true</IsTrimmable>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="GbxToolAPI" Version="1.0.3" />
+	  <PackageReference Include="GbxToolAPI" Version="1.0.4" />
 	</ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 		<PublishTrimmed>true</PublishTrimmed>
 		<TrimMode>partial</TrimMode>
+		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 
 	<ItemGroup>
